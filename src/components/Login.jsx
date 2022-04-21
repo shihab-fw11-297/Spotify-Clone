@@ -2,13 +2,33 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Login() {
+    const handleClick = async () => {
+        const client_id = "293bab92c76a43db8dfcbd511a329009";
+        const redirect_uri = "http://localhost:3000/";
+        const api_uri = "https://accounts.spotify.com/authorize";
+        const scope = [
+            "user-read-private",
+            "user-read-email",
+            "user-modify-playback-state",
+            "user-read-playback-state",
+            "user-read-currently-playing",
+            "user-read-recently-played",
+            "user-top-read",
+          ];
+          //after authenticated we need our application to be redirected to http://localhost:3000/ this url
+           //to https://accounts.spotify.com/authorize url
+          window.location.href = `${api_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope.join(
+            " "
+          )}&response_type=token&show_dialog=true`;
+
+    };
     return (
         <Container>
         <img
           src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Black.png"
           alt="spotify"
         />
-        <button>Connect Spotify</button>
+        <button onClick={handleClick}>Connect Spotify</button>
       </Container>
     )
 }
