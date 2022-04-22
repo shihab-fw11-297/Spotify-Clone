@@ -10,6 +10,18 @@ import axios from "axios";
 
 export default function Spotify() {
   const [{ token }, dispatch] = useStateProvider();
+  const [navBackground, setNavBackground] = useState(false);
+  const [headerBackground, setHeaderBackground] = useState(false);
+  const bodyRef = useRef();
+
+  const bodyScrolled = () => {
+    bodyRef.current.scrollTop >= 30
+      ? setNavBackground(true)
+      : setNavBackground(false);
+    bodyRef.current.scrollTop >= 268
+      ? setHeaderBackground(true)
+      : setHeaderBackground(false);
+  };
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -31,19 +43,19 @@ export default function Spotify() {
 
     return (
         <Container>
-            <div className="spotify__body">
-                <Sidebar />
-                <div className="body">
-                    <Navbar />
-                    <div className="body__contents">
-                        <Body />
-                    </div>
-                </div>
-            </div >
-            <div className="spotify__footer">
-                <Footer />
-            </div>
-        </Container>
+      <div className="spotify__body">
+        <Sidebar />
+        <div className="body" ref={bodyRef} onScroll={bodyScrolled}>
+          <Navbar navBackground={navBackground} />
+          <div className="body__contents">
+            <Body headerBackground={headerBackground} />
+          </div>
+        </div>
+      </div>
+      <div className="spotify__footer">
+        <Footer />
+      </div>
+    </Container>
     );
 }
 

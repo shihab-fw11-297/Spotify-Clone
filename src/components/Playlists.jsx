@@ -32,15 +32,25 @@ export default function Playlists() {
     };
     return (
         <Container>
-            <ul>
-                {playlists.map(({ name, id }) => {
-                    return (
-                        <li key={id} onClick={() => changeCurrentPlaylist(id)}>
-                            {name}
-                        </li>
-                    );
-                })}
-            </ul>
+            {playlists.length !== 0 ?
+                <ul>
+                    {playlists.map(({ name, id }) => {
+                        return (
+                            <li key={id} onClick={() => changeCurrentPlaylist(id)}>
+                                {name}
+                            </li>
+                        );
+                    })}
+                </ul> : <ul>
+                    <li key="1">Playlist 1#</li>
+                    <li key="1">Playlist 2#</li>
+                    <li key="1">Playlist 3#</li>
+                    <li key="1">Playlist 4#</li>
+                    <li key="1">Playlist 5#</li>
+                    <li key="1">Playlist 6#</li>
+                    <li key="1">Playlist 7#</li>
+                </ul>
+        }
         </Container>
     );
 }
