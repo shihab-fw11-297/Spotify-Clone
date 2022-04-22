@@ -23,6 +23,7 @@ export default function CurrentTrack() {
           artists: response.data.item.artists.map((artist) => artist.name),
           image: response.data.item.album.images[2].url,
         };
+       
         dispatch({ type: reducerCases.SET_PLAYING, currentPlaying });
       } else {
         dispatch({ type: reducerCases.SET_PLAYING, currentPlaying: null });
@@ -30,6 +31,7 @@ export default function CurrentTrack() {
     };
     getCurrentTrack();
   }, [token, dispatch]);
+
   return (
     <Container>
       {currentPlaying && (
