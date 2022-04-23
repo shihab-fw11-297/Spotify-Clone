@@ -5,58 +5,59 @@ import { reducerCases } from "../utils/Constants";
 import { useStateProvider } from "../utils/StateProvider";
 
 export default function Playlists() {
-    const [{ token, playlists }, dispatch] = useStateProvider();
-    useEffect(() => {
-        const getPlaylistData = async () => {
-            const response = await axios.get(
-                "https://api.spotify.com/v1/me/playlists",
-                {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            const { items } = response.data;
-            console.log(items);
-            const playlists = items.map(({ name, id }) => {
-                return { name, id };
-            });
-
-            dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
-        };
-        getPlaylistData();
-    }, [token, dispatch]);
-    const changeCurrentPlaylist = (selectedPlaylistId) => {
-        dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
-    };
-    return (
-        <Container>
-            {playlists.length !== 0 ?
-                <ul>
-                    {playlists.map(({ name, id }) => {
-                        return (
-                            <li key={id} onClick={() => changeCurrentPlaylist(id)}>
-                                {name}
-                            </li>
-                        );
-                    })}
-                </ul> : <ul>
-                    <li key="1">Playlist 1#</li>
-                    <li key="1">Playlist 2#</li>
-                    <li key="1">Playlist 3#</li>
-                    <li key="1">Playlist 4#</li>
-                    <li key="1">Playlist 5#</li>
-                    <li key="1">Playlist 6#</li>
-                    <li key="1">Playlist 7#</li>
-                </ul>
+  const [{ token, playlists }, dispatch] = useStateProvider();
+  useEffect(() => {
+    const getPlaylistData = async () => {
+      const response = await axios.get(
+        "https://api.spotify.com/v1/me/playlists",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
         }
-        </Container>
-    );
+      );
+      const { items } = response.data;
+      const playlists = items.map(({ name, id }) => {
+        return { name, id };
+      });
+      dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
+    };
+    getPlaylistData();
+  }, [token, dispatch]);
+  const changeCurrentPlaylist = (selectedPlaylistId) => {
+    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
+  };
+  return (
+    <Container>
+      {playlists.length !==0 ?
+      <ul>
+        {playlists.map(({ name, id }) => {
+          return (
+            <li key={id} onClick={() => changeCurrentPlaylist(id)}>
+              {name}
+            </li>
+          );
+        })}
+      </ul>
+      :
+      <ul>
+         <li key="1">My Playlist #1</li>
+         <li key="2">My Playlist #2</li>
+         <li key="3">My Playlist #3</li>
+         <li key="4">My Playlist #4</li>
+         <li key="5">My Playlist #5</li>
+         <li key="6">My Playlist #6</li>
+      </ul>
+
+    }
+    </Container>
+  );
 }
 
 const Container = styled.div`
   color: #b3b3b3;
+  font-weight:550;
   height: 100%;
   overflow: hidden;
   ul {
